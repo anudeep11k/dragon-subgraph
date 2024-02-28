@@ -1,0 +1,15 @@
+[
+  {
+    "type": "event",
+    "name": "batchTransfer",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "amount",
+        "internalType": "uint256",
+        "indexed": false
+      }
+    ],
+    "anonymous": false
+  }
+]

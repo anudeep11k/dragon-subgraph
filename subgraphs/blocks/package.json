@@ -1,0 +1,27 @@
+{
+  "name": "blocks",
+  "description": "PancakeSwap Subgraph",
+  "version": "1.0.0",
+  "repository": "git@github.com:dragon-swap-klaytn/dragon-subgraph.git",
+  "author": "PancakeSwap",
+  "license": "GPL-3.0-or-later",
+  "config": {
+    "testnet": {
+      "graph_node": "http://0.0.0.0:8020/",
+      "ipfs_url": "http://0.0.0.0:5001"
+    },
+    "cypress": {
+      "graph_node": "http://0.0.0.0:8020/",
+      "ipfs_url": "http://0.0.0.0:5001"
+    }
+  },
+  "scripts": {
+    "template": "mustache ../../config/$NETWORK.js subgraph.template.yaml > subgraph.yaml",
+    "auth": "graph auth --product hosted-service SUBGRAPH_ACCESS_TOKEN",
+    "codegen": "graph codegen subgraph.yaml",
+    "build": "graph build subgraph.yaml",
+    "create:cypress": "graph create  --network cypress --node $npm_package_config_cypress_graph_node dragonswap/blocks",
+    "deploy:cypress": "graph deploy  --network cypress --node $npm_package_config_cypress_graph_node --ipfs $npm_package_config_cypress_ipfs_url -l 0.3 dragonswap/blocks",
+    "all:cypress": "NETWORK=cypress yarn template && yarn codegen && yarn build && yarn create:cypress && yarn deploy:cypress"
+  }
+}
