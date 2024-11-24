@@ -1,0 +1,41 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Factory
+    network: kaia
+    source:
+      address: "0x7431A23897ecA6913D5c81666345D39F27d946A4"
+      abi: Factory
+      startBlock: 145315248
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - FeeAmountEnabled
+        - FeeAmountExtraInfoUpdated
+        - OwnerChanged
+        - PoolCreated
+        - SetLmPoolDeployer
+        - WhiteListAdded
+      abis:
+        - name: Factory
+          file: ./abis/Factory.json
+      eventHandlers:
+        - event: FeeAmountEnabled(indexed uint24,indexed int24)
+          handler: handleFeeAmountEnabled
+        - event: FeeAmountExtraInfoUpdated(indexed uint24,bool,bool)
+          handler: handleFeeAmountExtraInfoUpdated
+        - event: OwnerChanged(indexed address,indexed address)
+          handler: handleOwnerChanged
+        - event: PoolCreated(indexed address,indexed address,indexed uint24,int24,address)
+          handler: handlePoolCreated
+        - event: SetLmPoolDeployer(indexed address)
+          handler: handleSetLmPoolDeployer
+        - event: WhiteListAdded(indexed address,bool)
+          handler: handleWhiteListAdded
+      file: ./src/factory.ts
